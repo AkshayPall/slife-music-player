@@ -1,7 +1,23 @@
 Technical Goals & Areas to Explore:
 	Media player - audio drivers
-	Animations with playing
+	Animations on music player section
 	Wifi p2p/GPS scanning & seeing nearby people
 	File saving (see history of people you've met)
 	"Leaderboard" or current trending section - database (firebase to save time?) 
 	Achievements for friendships made from music sharing
+
+Design Noes:
+	Material Palette:
+		500 colour series represent dominant theme : toolbar colour
+		700 : status bar
+		300 : secondary information		
+		A series : accents
+
+	**Colour scheme:
+		primary : 212121
+		primary dark : 101010
+		accent: ff5252
+		
+		light grey : 9E9E9E
+		dark grey : 424242
+	
