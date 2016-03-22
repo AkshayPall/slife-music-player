@@ -1,0 +1,7 @@
+Technical Goals & Areas to Explore:
+	Media player - audio drivers
+	Animations with playing
+	Wifi p2p/GPS scanning & seeing nearby people
+	File saving (see history of people you've met)
+	"Leaderboard" or current trending section - database (firebase to save time?) 
+	Achievements for friendships made from music sharing
