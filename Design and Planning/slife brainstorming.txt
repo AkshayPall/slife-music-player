@@ -4,7 +4,8 @@ Technical Goals & Areas to Explore:
 	Wifi p2p/GPS scanning & seeing nearby people
 	File saving (see history of people you've met)
 	"Leaderboard" or current trending section - database (firebase to save time?) 
-	Achievements for friendships made from music sharing
+	Achievements for friendships made from music 
+	Notification responses (activity intents)
 
 Design Noes:
 	Material Palette:
