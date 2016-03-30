@@ -1,8 +1,14 @@
 package com.example.akshaypall.slife;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +18,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +49,26 @@ public class LibraryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //for the setup of the tabs for SONGS, ALBUM, and ARTISTS
+        ViewPager viewPager = (ViewPager)findViewById(R.id.library_viewpager);
+        setLibraryViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.library_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setLibraryViewPager (ViewPager viewPager){
+        LibraryViewPagerAdapter adapter = new LibraryViewPagerAdapter(getSupportFragmentManager());
+        //TODO: finish creating fragment classes
+        //TODO: remove test frags
+        adapter.addFragment(new Fragment(), "test1");
+        adapter.addFragment(new Fragment(), "test2");
+        adapter.addFragment(new Fragment(), "test3");
+//        adapter.addFragment(new SongFragment(), R.string.library_song);
+//        adapter.addFragment(new AlbumFragment(), R.string.library_album);
+//        adapter.addFragment(new ArtistFragment(), R.string.library_artist);
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -93,5 +122,36 @@ public class LibraryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //viewpager adapter class
+
+    private class LibraryViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public LibraryViewPagerAdapter (FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return  mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment (Fragment frag, String title) {
+            mFragmentList.add(frag);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

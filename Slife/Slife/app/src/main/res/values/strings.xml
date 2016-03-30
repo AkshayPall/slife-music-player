@@ -5,4 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="library_song">SONGS</string>
+    <string name="library_artist">ARTISTS</string>
+    <string name="library_album">ALBUMS</string>
 </resources>
