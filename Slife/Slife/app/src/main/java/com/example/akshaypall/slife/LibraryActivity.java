@@ -62,10 +62,9 @@ public class LibraryActivity extends AppCompatActivity
         LibraryViewPagerAdapter adapter = new LibraryViewPagerAdapter(getSupportFragmentManager());
         //TODO: finish creating fragment classes
         //TODO: remove test frags
-        adapter.addFragment(new Fragment(), "test1");
+        adapter.addFragment(new SongFragment(), getString(R.string.library_song));
         adapter.addFragment(new Fragment(), "test2");
         adapter.addFragment(new Fragment(), "test3");
-//        adapter.addFragment(new SongFragment(), R.string.library_song);
 //        adapter.addFragment(new AlbumFragment(), R.string.library_album);
 //        adapter.addFragment(new ArtistFragment(), R.string.library_artist);
         viewPager.setAdapter(adapter);

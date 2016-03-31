@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,13 @@ public class SongFragment extends Fragment {
         }
 
         mSongList = new ArrayList<Song>();
+        getSongs();
+        Collections.sort(mSongList, new Comparator<Song>(){
+            public int compare(Song a, Song b){
+                return a.getmName().compareTo(b.getmName());
+            }
+        });
+
         return view;
     }
 
@@ -120,6 +128,7 @@ public class SongFragment extends Fragment {
                     thisAlbum = "Unknown Album";
                 }
 
+                Log.wtf("Title: ", thisTitle+", by "+thisArtist+", on :"+ thisAlbum);
                 mSongList.add(new Song(thisId, thisTitle, thisArtist, thisAlbum));
             }
             while (musicCursor.moveToNext());
