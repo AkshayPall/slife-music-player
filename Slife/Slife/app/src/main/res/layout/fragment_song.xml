@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text_margin"
-            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginRight="@dimen/song_text_right_margin"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="@dimen/text_margin"
             android:text="The Thrill (Porter Robinson Remix)"
@@ -43,6 +43,7 @@
             android:textSize="12sp"
             android:layout_marginBottom="@dimen/text_margin"
             android:text="Nero"
+            android:layout_marginRight="@dimen/song_text_right_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
@@ -57,12 +58,12 @@
             android:textColor="@android:color/white"/>
 
         <View
-            android:layout_alignLeft="@id/song_album_initial"
+            android:layout_alignLeft="@id/song_title"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignRight="@id/song_time"
             android:layout_below="@id/song_artist"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/midGrey"/>
     </RelativeLayout>
 
 

@@ -6,5 +6,6 @@
 
     <!--Additional colours for use -->
     <color name="lightGrey">#9E9E9E</color>
-    <color name="darkGrey">#424242</color>
+    <color name="midGrey">#3e3e3e</color>
+    <color name="darkGrey">#303030</color>
 </resources>
