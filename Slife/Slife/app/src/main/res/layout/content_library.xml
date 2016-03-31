@@ -12,8 +12,5 @@
     tools:context="com.example.akshaypall.slife.LibraryActivity"
     tools:showIn="@layout/app_bar_library">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+
 </RelativeLayout>
