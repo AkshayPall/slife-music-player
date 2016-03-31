@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SongFragment.OnSongPressedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,12 @@ public class LibraryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSongPressed(Song song) {
+        //TODO: update media player
+        Log.wtf("Song selected", "" + song.getmName());
     }
 
     //viewpager adapter class

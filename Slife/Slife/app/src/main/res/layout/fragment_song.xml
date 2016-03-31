@@ -11,15 +11,16 @@
         android:orientation="horizontal">
         <TextView
             android:textColor="@android:color/white"
-            android:id="@+id/id"
+            android:id="@+id/song_album_initial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:text="1"
+            android:text="A"
+            android:layout_centerVertical="true"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            android:layout_toRightOf="@id/id"
+            android:layout_toRightOf="@id/song_album_initial"
             android:textColor="@android:color/white"
             android:id="@+id/song_title"
             android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            android:layout_toRightOf="@id/id"
+            android:layout_toRightOf="@id/song_album_initial"
             android:layout_below="@id/song_title"
             android:textColor="@android:color/white"
             android:id="@+id/song_artist"
@@ -56,7 +57,7 @@
             android:textColor="@android:color/white"/>
 
         <View
-            android:layout_alignLeft="@id/id"
+            android:layout_alignLeft="@id/song_album_initial"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignRight="@id/song_time"

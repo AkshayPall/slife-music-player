@@ -1,6 +1,7 @@
 package com.example.akshaypall.slife;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,15 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link com.example.akshaypall.slife.SongFragment.OnSongPressedListener}.
- * TODO: Replace the implementation with code for your data type.
+ *
  */
 public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Song> mSongs;
     private final OnSongPressedListener mListener;
 
-    public SongRecyclerViewAdapter(List<DummyItem> items, OnSongPressedListener listener) {
-        mValues = items;
+    public SongRecyclerViewAdapter(List<Song> songs, OnSongPressedListener listener) {
+        mSongs = songs;
         mListener = listener;
     }
 
@@ -35,9 +36,21 @@ public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mSong = mSongs.get(position);
+        if (holder.mSong != null){
+            char albumInitial = (holder.mSong.getmAlbum() != null) ? holder.mSong.getmAlbum().charAt(0) : 'U';
+            holder.mAlbumInitial.setText(""+albumInitial);
+
+            String songTitle = (holder.mSong.getmName() != null) ? holder.mSong.getmName() : "Unnamed Track";
+            holder.mSongTitle.setText(songTitle);
+
+            String artistName = (holder.mSong.getmArtist() != null) ? holder.mSong.getmArtist() : "Unknown Artist";
+            holder.mArtistName.setText(artistName);
+
+            //TODO: UPDATE SONG LENGTH LABEL
+        } else {
+            Log.wtf("Error", "holder.msong is NULL");
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +58,7 @@ public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onSongPressed(holder.mItem);
+                    mListener.onSongPressed(holder.mSong);
                 }
             }
         });
@@ -53,25 +66,29 @@ public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mSongs.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mAlbumInitial;
+        public final TextView mSongTitle;
+        public final TextView mArtistName;
+        public final TextView mLength;
+        public Song mSong;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mAlbumInitial = (TextView) view.findViewById(R.id.song_album_initial);
+            mSongTitle = (TextView) view.findViewById(R.id.song_title);
+            mArtistName = (TextView)view.findViewById(R.id.song_artist);
+            mLength = (TextView)view.findViewById(R.id.song_time);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mSongTitle.getText() + "'";
         }
     }
 }

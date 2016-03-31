@@ -28,7 +28,7 @@ import com.example.akshaypall.slife.dummy.DummyContent.DummyItem;
  * Activities containing this fragment MUST implement the {@link OnSongPressedListener}
  * interface.
  */
-public class SongFragment extends Fragment {
+public class SongFragment extends Fragment{
 
     //parameter argument names
     private static final String ARG_TAB_NAME = "tab_name";
@@ -74,14 +74,7 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new SongRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
-
+        //QUERY THE SONGS
         mSongList = new ArrayList<Song>();
         getSongs();
         Collections.sort(mSongList, new Comparator<Song>(){
@@ -89,6 +82,14 @@ public class SongFragment extends Fragment {
                 return a.getmName().compareTo(b.getmName());
             }
         });
+
+        // Set the adapter
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(new SongRecyclerViewAdapter(mSongList, mListener));
+        }
 
         return view;
     }
@@ -165,7 +166,6 @@ public class SongFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnSongPressedListener {
-        // TODO: Update argument type and name
-        void onSongPressed (DummyItem item);
+        void onSongPressed (Song song);
     }
 }
