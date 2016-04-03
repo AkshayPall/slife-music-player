@@ -2,6 +2,7 @@ package com.example.akshaypall.slife;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +31,15 @@ import java.util.List;
 public class LibraryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SongFragment.OnSongPressedListener {
 
+
+    private BottomSheetBehavior mBottomSheetBehavior;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,6 +56,31 @@ public class LibraryActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.library_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        //setting up media player bottomsheet
+        View mediaPlayerBottomSheet = findViewById(R.id.library_media_bottomsheet);
+
+        mBottomSheetBehavior = BottomSheetBehavior.from(mediaPlayerBottomSheet);
+//        mBottomSheetBehavior.setPeekHeight(300);
+//        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        ImageButton songState = (ImageButton) findViewById(R.id.library_play_pause_fab);
+        songState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        //TODO: delete this onClick for the toolbar, it is only for testing bottomsheet media player
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                Log.wtf("toolbar pressed", "bottom sheet should expand");
+            }
+        });
     }
 
     private void setLibraryViewPager (ViewPager viewPager){
