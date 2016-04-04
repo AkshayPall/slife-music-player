@@ -19,9 +19,6 @@ import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
 
-import com.example.akshaypall.slife.dummy.DummyContent;
-import com.example.akshaypall.slife.dummy.DummyContent.DummyItem;
-
 /**
  * A fragment representing a list of Items.
  * <p/>

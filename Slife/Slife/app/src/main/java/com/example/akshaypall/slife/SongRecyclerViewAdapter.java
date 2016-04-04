@@ -8,15 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.akshaypall.slife.SongFragment.OnSongPressedListener;
-import com.example.akshaypall.slife.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link com.example.akshaypall.slife.SongFragment.OnSongPressedListener}.
- *
- */
 public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerViewAdapter.ViewHolder> {
 
     private final List<Song> mSongs;

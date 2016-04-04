@@ -3,6 +3,7 @@ package com.example.akshaypall.slife;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -58,29 +59,10 @@ public class LibraryActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
 
         //setting up media player bottomsheet
-        View mediaPlayerBottomSheet = findViewById(R.id.library_media_bottomsheet);
-
-        mBottomSheetBehavior = BottomSheetBehavior.from(mediaPlayerBottomSheet);
+        BottomSheetDialogFragment bottomSheetDialogFragment = new MediaBottomSheetDialogFragment();
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
 //        mBottomSheetBehavior.setPeekHeight(300);
 //        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-        ImageButton songState = (ImageButton) findViewById(R.id.library_play_pause_fab);
-        songState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        //TODO: delete this onClick for the toolbar, it is only for testing bottomsheet media player
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                Log.wtf("toolbar pressed", "bottom sheet should expand");
-            }
-        });
     }
 
     private void setLibraryViewPager (ViewPager viewPager){
