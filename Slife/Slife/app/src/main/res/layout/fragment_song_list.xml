@@ -11,4 +11,4 @@
     android:background="@color/darkGrey"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.example.akshaypall.slife.SongFragment"
-    tools:listitem="@layout/fragment_song" />
+    tools:listitem="@layout/fragment_song"/>

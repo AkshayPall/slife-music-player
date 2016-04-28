@@ -13,14 +13,49 @@
             android:id="@+id/bottomsheet_header"
             android:layout_width="match_parent"
             android:layout_height="@dimen/library_player_bottomsheet_minimized_coloured_length"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorPrimary"/>
 
-        <Button
+        <ImageView
+            android:id="@+id/current_song_thumbnail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:background="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/current_song_name"
+            android:layout_alignTop="@id/current_song_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Song Title"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginLeft="64dp" />
+
+        <TextView
+            android:id="@+id/current_song_artist"
+            android:layout_alignBottom="@id/current_song_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Artist Name"
+            style="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginLeft="64dp"/>
+
+        <ImageButton
+            android:scaleType="fitCenter"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/bottomsheet_play_pause_button"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:padding="4dp"
             android:src="@drawable/ic_song_play"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="8dp"
             android:layout_alignRight="@id/bottomsheet_header"/>
     </RelativeLayout>
 </FrameLayout>

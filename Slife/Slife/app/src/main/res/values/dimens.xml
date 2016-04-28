@@ -12,4 +12,5 @@
     <dimen name="library_player_bottomsheet_minimized_coloured_length">56dp</dimen>
     <dimen name="bottomsheet_vertical_padding">50dp</dimen>
     <dimen name="bottomsheet_horizontal_padding">20dp</dimen>
+    <dimen name="media_player_bottomsheet_collapsed_height">54dp</dimen>
 </resources>

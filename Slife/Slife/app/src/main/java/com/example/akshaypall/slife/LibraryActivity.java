@@ -25,7 +25,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 
@@ -36,7 +38,15 @@ public class LibraryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SongFragment.OnSongPressedListener {
 
 
+    public static final float MEDIA_PLAYER_HEIGHT = 165;
+
     BottomSheetLayout bottomSheetLayout;
+
+    //current song views
+    private TextView mCurrentSongTitle;
+    private TextView mCurrentSongArtist;
+    private ImageView mCurrentSongThumbnail; //TODO: update to use
+    private ImageButton mCurrentSongStateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,31 +74,28 @@ public class LibraryActivity extends AppCompatActivity
 
         //setup of NEW flipboard bottomsheet
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
-        bottomSheetLayout.setPeekOnDismiss(true);
-        bottomSheetLayout.setPeekSheetTranslation(165);
+        bottomSheetLayout.setOnSheetStateChangeListener(new BottomSheetLayout.OnSheetStateChangeListener() {
+            @Override
+            public void onSheetStateChanged(BottomSheetLayout.State state) {
+                if (state != null){
+                    if (state == BottomSheetLayout.State.HIDDEN)
+                        bottomSheetLayout.peekSheet();
+                }
+            }
+        });
+        bottomSheetLayout.setPeekSheetTranslation(MEDIA_PLAYER_HEIGHT);
         bottomSheetLayout.setInterceptContentTouch(false);
-        
 
         bottomSheetLayout.showWithSheetView(getLayoutInflater().inflate(R.layout.medoa_bottomsheet, bottomSheetLayout, false));
-//        DEPRECATED - old bottomsheet work
-//        //setting up media player bottomsheet
-//        mBottomSheetBehavior = BottomSheetBehavior.from(R.id.)
-//        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-//            @Override
-//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-//                Log.wtf("Bottom sheet", "state changed");
-//            }
-//
-//            @Override
-//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//                Log.wtf("Bottom sheet", "moved!");
-//            }
-//        });
-//
-//        mBottomSheetBehavior.setPeekHeight(300);
-//        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//        BottomSheetDialogFragment bottomSheetDialogFragment = new MediaBottomSheetDialogFragment();
-//        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+
+        setupCurrentSongViews();
+    }
+
+    private void setupCurrentSongViews() {
+        mCurrentSongTitle = (TextView)findViewById(R.id.current_song_name);
+        mCurrentSongArtist =(TextView)findViewById(R.id.current_song_artist);
+        mCurrentSongStateButton = (ImageButton)findViewById(R.id.bottomsheet_play_pause_button);
+        mCurrentSongThumbnail = (ImageView)findViewById(R.id.current_song_thumbnail);
     }
 
     private void setLibraryViewPager (ViewPager viewPager){
