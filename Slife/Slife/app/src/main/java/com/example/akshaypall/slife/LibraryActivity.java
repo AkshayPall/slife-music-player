@@ -64,6 +64,7 @@ public class LibraryActivity extends AppCompatActivity
 
         //setup of NEW flipboard bottomsheet
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+        bottomSheetLayout.showWithSheetView(getLayoutInflater().inflate(R.layout.medoa_bottomsheet, bottomSheetLayout, false));
 
 
 //        DEPRECATED - old bottomsheet work

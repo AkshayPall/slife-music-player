@@ -8,6 +8,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="song_text_right_margin">56dp</dimen>
-    <dimen name="library_player_backsheet_length">500dp</dimen>
-    <dimen name="library_player_backsheet_minimized_coloured_length">42dp</dimen>
+    <dimen name="library_player_bottomsheet_length">500dp</dimen>
+    <dimen name="library_player_bottomsheet_minimized_coloured_length">56dp</dimen>
+    <dimen name="bottomsheet_vertical_padding">50dp</dimen>
+    <dimen name="bottomsheet_horizontal_padding">20dp</dimen>
 </resources>
