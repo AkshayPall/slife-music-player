@@ -2,6 +2,7 @@ package com.example.akshaypall.slife;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +27,8 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.flipboard.bottomsheet.BottomSheetLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class LibraryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SongFragment.OnSongPressedListener {
 
 
-    private BottomSheetBehavior mBottomSheetBehavior;
+    BottomSheetLayout bottomSheetLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +56,35 @@ public class LibraryActivity extends AppCompatActivity
 
         //for the setup of the tabs for SONGS, ALBUM, and ARTISTS
         ViewPager viewPager = (ViewPager)findViewById(R.id.library_viewpager);
+        viewPager.setOffscreenPageLimit(3);
         setLibraryViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.library_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        //setting up media player bottomsheet
-        BottomSheetDialogFragment bottomSheetDialogFragment = new MediaBottomSheetDialogFragment();
-        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+        //setup of NEW flipboard bottomsheet
+        bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+
+
+//        DEPRECATED - old bottomsheet work
+//        //setting up media player bottomsheet
+//        mBottomSheetBehavior = BottomSheetBehavior.from(R.id.)
+//        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+//            @Override
+//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+//                Log.wtf("Bottom sheet", "state changed");
+//            }
+//
+//            @Override
+//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//                Log.wtf("Bottom sheet", "moved!");
+//            }
+//        });
+//
 //        mBottomSheetBehavior.setPeekHeight(300);
 //        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        BottomSheetDialogFragment bottomSheetDialogFragment = new MediaBottomSheetDialogFragment();
+//        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 
     private void setLibraryViewPager (ViewPager viewPager){
