@@ -27,14 +27,13 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
     //song list
     private ArrayList<Song> mSongs;
     //current position
-    private int mSongPosition;
+    private Song mCurrentSong;
 
     private final IBinder mMusicBind = new PlayerBinder();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mSongPosition = 0; //initiate song position
         mPlayer = new MediaPlayer(); //prepare media player
         initMusicPlayer();
     }
@@ -82,8 +81,8 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
         mSongs = songs;
     }
 
-    public void setASong(int songIndex){
-        mSongPosition = songIndex;
+    public void setASong(Song song){
+        mCurrentSong = song;
     }
 
     public class PlayerBinder extends Binder {
@@ -102,7 +101,7 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
         mPlayer.reset();
 
         //get song
-        Song playSong = mSongs.get(mSongPosition);
+        Song playSong = mCurrentSong;
         //get id
         long currSong = playSong.getmId();
         //set uri
@@ -118,5 +117,7 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
         }
 
         mPlayer.prepareAsync();
+
+        ((LibraryActivity)getApplicationContext()).updatePlayerState();
     }
 }

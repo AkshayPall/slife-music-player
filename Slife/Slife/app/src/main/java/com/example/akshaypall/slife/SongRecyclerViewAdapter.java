@@ -46,10 +46,12 @@ public class SongRecyclerViewAdapter extends RecyclerView.Adapter<SongRecyclerVi
             Log.wtf("Error", "holder.msong is NULL");
         }
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mSongTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
+                Log.wtf("should click!", "is song clicked?");
+                if (mListener != null) {
+                    Log.wtf("song pressed???",holder.mSong.getmName());
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onSongPressed(holder.mSong);

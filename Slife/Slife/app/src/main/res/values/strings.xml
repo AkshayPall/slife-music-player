@@ -8,4 +8,5 @@
     <string name="library_song">SONGS</string>
     <string name="library_artist">ARTISTS</string>
     <string name="library_album">ALBUMS</string>
+    <string name="action_end_service">Quit Player</string>
 </resources>

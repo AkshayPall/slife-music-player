@@ -226,9 +226,15 @@ public class LibraryActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_end_service) {
+            stopService(mPlayIntent);
+            mPlayerService=null;
+            System.exit(0);
         }
+        //TODO: implement shuffle
+//        if (id == R.id.action_shuffle){
+//            //here
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -256,8 +262,18 @@ public class LibraryActivity extends AppCompatActivity
 
     @Override
     public void onSongPressed(Song song) {
-        //TODO: update media player
-        Log.wtf("Song selected", "" + song.getmName());
+        Log.wtf("Song selected", "");
+        mPlayerService.setASong(song);
+        mPlayerService.playSong();
+    }
+
+    public void updatePlayerState() {
+        if (mMusicBound) {
+            //music is playing
+            mCurrentSongStateButton.setImageResource(R.drawable.ic_song_pause);
+        } else {
+            mCurrentSongStateButton.setImageResource(R.drawable.ic_song_play);
+        }
     }
 
     //viewpager adapter class
@@ -289,5 +305,12 @@ public class LibraryActivity extends AppCompatActivity
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(mPlayIntent);
+        mPlayerService = null;
+        super.onDestroy();
     }
 }
