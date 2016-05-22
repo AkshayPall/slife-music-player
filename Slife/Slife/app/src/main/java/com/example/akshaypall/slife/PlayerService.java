@@ -1,13 +1,18 @@
 package com.example.akshaypall.slife;
 
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -69,16 +74,49 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-
+        //when player is ready to play song
+        mp.start(); //play song
     }
 
     public void setSongs (ArrayList<Song> songs){
         mSongs = songs;
     }
 
+    public void setASong(int songIndex){
+        mSongPosition = songIndex;
+    }
+
     public class PlayerBinder extends Binder {
         PlayerService getService() {
             return PlayerService.this;
         }
+    }
+
+    /**
+     *
+     * PLAYER METHODS BELOW
+     *
+     * **/
+
+    public void playSong() {
+        mPlayer.reset();
+
+        //get song
+        Song playSong = mSongs.get(mSongPosition);
+        //get id
+        long currSong = playSong.getmId();
+        //set uri
+        Uri trackUri = ContentUris.withAppendedId(
+                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                currSong);
+        try{
+            mPlayer.setDataSource(getApplicationContext(), trackUri);
+        }
+        catch(Exception e){
+            Log.e("MUSIC SERVICE", "Error setting data source", e);
+            Toast.makeText(getApplicationContext(), "Error playing song", Toast.LENGTH_SHORT).show();
+        }
+
+        mPlayer.prepareAsync();
     }
 }
