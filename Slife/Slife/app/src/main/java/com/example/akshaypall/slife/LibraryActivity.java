@@ -1,7 +1,16 @@
 package com.example.akshaypall.slife;
 
 import android.app.ActionBar;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -31,16 +40,22 @@ import android.widget.TextView;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SongFragment.OnSongPressedListener {
 
+    public static ArrayList<Song> SONGS_LIST;
 
     public static final float MEDIA_PLAYER_HEIGHT = 165;
 
     BottomSheetLayout bottomSheetLayout;
+
+    private PlayerService mPlayerService;
+    private Intent mPlayIntent;
+    private boolean mMusicBound = false;
 
     //current song views
     private TextView mCurrentSongTitle;
@@ -72,6 +87,9 @@ public class LibraryActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout)findViewById(R.id.library_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        //load songs
+        SONGS_LIST = getSongs();
+
         //setup of NEW flipboard bottomsheet
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
         bottomSheetLayout.setOnSheetStateChangeListener(new BottomSheetLayout.OnSheetStateChangeListener() {
@@ -89,6 +107,79 @@ public class LibraryActivity extends AppCompatActivity
         bottomSheetLayout.showWithSheetView(getLayoutInflater().inflate(R.layout.medoa_bottomsheet, bottomSheetLayout, false));
 
         setupCurrentSongViews();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mPlayIntent==null){
+            mPlayIntent = new Intent(this, PlayerService.class);
+            bindService(mPlayIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(mPlayIntent);
+        }
+    }
+
+    //connect to the service
+    private ServiceConnection musicConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            PlayerService.PlayerBinder binder = (PlayerService.PlayerBinder)service;
+            //get service
+            mPlayerService = binder.getService();
+            //pass list
+            mPlayerService.setSongs(SONGS_LIST);
+            mMusicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mMusicBound = false;
+        }
+    };
+
+    public ArrayList<Song> getSongs() {
+        ArrayList<Song> songs = new ArrayList<>();
+        ContentResolver musicResolver = this.getContentResolver();
+        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+
+        if(musicCursor!=null && musicCursor.moveToFirst()){
+            //get columns
+            int titleColumn = musicCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media.TITLE);
+            int idColumn = musicCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media._ID);
+            int artistColumn = musicCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media.ARTIST);
+            int albumColumn = musicCursor.getColumnIndex
+                    (MediaStore.Audio.Media.ALBUM);
+            //add songs to list
+            do {
+                long thisId = musicCursor.getLong(idColumn);
+                String thisTitle = musicCursor.getString(titleColumn);
+
+                String thisArtist;
+                if (musicCursor.getString(artistColumn) != null)
+                    thisArtist = musicCursor.getString(artistColumn);
+                else {
+                    thisArtist = "Unknown Artist";
+                }
+
+
+                String thisAlbum;
+                if (musicCursor.getString(albumColumn) != null)
+                    thisAlbum = musicCursor.getString(albumColumn);
+                else {
+                    thisAlbum = "Unknown Album";
+                }
+
+                Log.wtf("Title: ", thisTitle+", by "+thisArtist+", on :"+ thisAlbum);
+                songs.add(new Song(thisId, thisTitle, thisArtist, thisAlbum));
+            }
+            while (musicCursor.moveToNext());
+        }
+        return songs;
     }
 
     private void setupCurrentSongViews() {

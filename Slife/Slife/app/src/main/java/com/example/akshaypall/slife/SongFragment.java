@@ -36,14 +36,6 @@ public class SongFragment extends Fragment{
     public static final String ARTIST_TAB = "Artist";
 
     private OnSongPressedListener mListener;
-    private String mTabName;
-
-    //songs list
-    private ArrayList<Song> mSongList;
-
-    private PlayerService mPlayerService;
-    private Intent mPlayIntent;
-    private boolean mMusicBound = false;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,7 +59,7 @@ public class SongFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mTabName = getArguments().getString(ARG_TAB_NAME);
+            String mTabName = getArguments().getString(ARG_TAB_NAME);
         }
     }
 
@@ -77,8 +69,7 @@ public class SongFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
 
         //QUERY THE SONGS
-        mSongList = new ArrayList<Song>();
-        getSongs();
+        ArrayList<Song> mSongList = LibraryActivity.SONGS_LIST;
         Collections.sort(mSongList, new Comparator<Song>(){
             public int compare(Song a, Song b){
                 return a.getmName().compareTo(b.getmName());
@@ -96,48 +87,7 @@ public class SongFragment extends Fragment{
         return view;
     }
 
-    public void getSongs() {
-        ContentResolver musicResolver = getActivity().getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
-        if(musicCursor!=null && musicCursor.moveToFirst()){
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            int albumColumn = musicCursor.getColumnIndex
-                    (MediaStore.Audio.Media.ALBUM);
-            //add songs to list
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-
-                String thisArtist;
-                if (musicCursor.getString(artistColumn) != null)
-                    thisArtist = musicCursor.getString(artistColumn);
-                else {
-                    thisArtist = "Unknown Artist";
-                }
-
-
-                String thisAlbum;
-                if (musicCursor.getString(albumColumn) != null)
-                    thisAlbum = musicCursor.getString(albumColumn);
-                else {
-                    thisAlbum = "Unknown Album";
-                }
-
-                Log.wtf("Title: ", thisTitle+", by "+thisArtist+", on :"+ thisAlbum);
-                mSongList.add(new Song(thisId, thisTitle, thisArtist, thisAlbum));
-            }
-            while (musicCursor.moveToNext());
-        }
-
-    }
 
 
 //    @Override

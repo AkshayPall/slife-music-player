@@ -24,6 +24,8 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
     //current position
     private int mSongPosition;
 
+    private final IBinder mMusicBind = new PlayerBinder();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -46,6 +48,13 @@ public class PlayerService extends Service implements MediaPlayer.OnPreparedList
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        mPlayer.stop();
+        mPlayer.release();
+        return false;
     }
 
     @Override
