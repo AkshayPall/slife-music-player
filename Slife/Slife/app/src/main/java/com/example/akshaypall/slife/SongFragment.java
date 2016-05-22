@@ -1,6 +1,7 @@
 package com.example.akshaypall.slife;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,10 @@ public class SongFragment extends Fragment{
 
     //songs list
     private ArrayList<Song> mSongList;
+
+    private PlayerService mPlayerService;
+    private Intent mPlayIntent;
+    private boolean mMusicBound = false;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
